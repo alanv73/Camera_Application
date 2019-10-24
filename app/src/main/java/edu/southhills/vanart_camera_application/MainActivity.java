@@ -25,8 +25,8 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 2;
+    String mCurrentPhotoPath;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity {
     public void takeAndSaveButton(View v){
         if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(this, "Already Granted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Permission to Write Image to Gallery Already Granted",
+                    Toast.LENGTH_LONG).show();
 
             dispatchTakePictureIntentAndSave();
 
