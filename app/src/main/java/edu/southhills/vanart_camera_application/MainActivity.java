@@ -49,17 +49,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ImageView ivThumbNail = findViewById(R.id.ivThumbNail);
-        ivThumbNail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    }
 
-                Intent gotoGalleryIntent = new Intent(Intent.ACTION_VIEW);
-                gotoGalleryIntent.setType("image/*");
-                startActivity(gotoGalleryIntent);
-
-            }
-        });
+    public void imageClick(View v){
+        Intent gotoGalleryIntent = new Intent(Intent.ACTION_VIEW);
+        gotoGalleryIntent.setType("image/*");
+        startActivity(gotoGalleryIntent);
     }
 
     @Override
@@ -151,10 +146,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void galleryAddPic(){
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
+        try {
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            File f = new File(mCurrentPhotoPath);
+            Uri contentUri = Uri.fromFile(f);
+            mediaScanIntent.setData(contentUri);
+            this.sendBroadcast(mediaScanIntent);
+
+            ImageView mImage = findViewById(R.id.ivThumbNail);
+            Bitmap bitmap = null;
+
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentUri);
+            mImage.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

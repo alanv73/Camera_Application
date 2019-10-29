@@ -34,6 +34,7 @@
         android:id="@+id/ivThumbNail"
         android:layout_width="173dp"
         android:layout_height="188dp"
+        android:onClick="imageClick"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
