@@ -53,4 +53,17 @@
         app:layout_constraintStart_toEndOf="@+id/btnCamera"
         app:layout_constraintTop_toTopOf="@+id/btnCamera" />
 
+    <Button
+        android:id="@+id/btnFileShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="lauchFileShareActivity"
+        android:text="File Share"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivThumbNail"
+        app:layout_constraintVertical_bias="0.59" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

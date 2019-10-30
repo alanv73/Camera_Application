@@ -162,4 +162,9 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void lauchFileShareActivity(View v){
+        Intent fileShareIntent = new Intent(this, FileShareActivity.class);
+        startActivity(fileShareIntent);
+    }
 }
