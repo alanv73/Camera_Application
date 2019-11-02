@@ -79,27 +79,7 @@ public class FileShareActivity extends AppCompatActivity {
                                     View view,
                                     int position,
                                     long rowId) {
-                /*
-                 * Get a File for the selected file name.
-                 * Assume that the file names are in the
-                 * imageFilename array.
-                 */
-                File requestFile = new File(mImageFilenames[position]);
-                /*
-                 * Most file-related method calls need to be in
-                 * try-catch blocks.
-                 */
-                // Use the FileProvider to get a content URI
-                Uri fileUri = null;
-                try {
-                    fileUri = FileProvider.getUriForFile(
-                            FileShareActivity.this,
-                            "edu.southhills.vanart_camera_application",
-                            requestFile);
-                } catch (IllegalArgumentException e) {
-                    Log.e("File Selector",
-                            "The selected file can't be shared: " + requestFile.toString());
-                }
+                Uri fileUri = getSelectedFile(position);
 
                 if(fileUri != null){
                     // Grant temporary read permission to the content URI
@@ -126,27 +106,7 @@ public class FileShareActivity extends AppCompatActivity {
                                             View view,
                                             int position,
                                             long rowId) {
-                /*
-                 * Get a File for the selected file name.
-                 * Assume that the file names are in the
-                 * imageFilename array.
-                 */
-                File requestFile = new File(mImageFilenames[position]);
-                /*
-                 * Most file-related method calls need to be in
-                 * try-catch blocks.
-                 */
-                // Use the FileProvider to get a content URI
-                Uri fileUri = null;
-                try {
-                    fileUri = FileProvider.getUriForFile(
-                            FileShareActivity.this,
-                            "edu.southhills.vanart_camera_application",
-                            requestFile);
-                } catch (IllegalArgumentException e) {
-                    Log.e("File Selector",
-                            "The selected file can't be shared: " + requestFile.toString());
-                }
+                Uri fileUri = getSelectedFile(position);
 
                 if(fileUri != null){
                     String[] toField = new String[] {"alanv73@gmail.com"};
@@ -185,6 +145,34 @@ public class FileShareActivity extends AppCompatActivity {
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(FileShareActivity.this, "eMail Client not Found", Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+    private Uri getSelectedFile(int position){
+        /*
+         * Get a File for the selected file name.
+         * Assume that the file names are in the
+         * imageFilename array.
+         */
+        File requestFile = new File(mImageFilenames[position]);
+
+        /*
+         * Most file-related method calls need to be in
+         * try-catch blocks.
+         */
+        // Use the FileProvider to get a content URI
+        Uri fileUri = null;
+        try {
+            fileUri = FileProvider.getUriForFile(
+                    FileShareActivity.this,
+                    "edu.southhills.vanart_camera_application",
+                    requestFile);
+        } catch (IllegalArgumentException e) {
+            Log.e("File Selector",
+                    "The selected file can't be shared: " + requestFile.toString());
+        }
+
+        return fileUri;
 
     }
 }
