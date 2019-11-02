@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void lauchFileShareActivity(View v){
+    public void launchFileShareActivity(View v){
         Intent fileShareIntent = new Intent(this, FileShareActivity.class);
         startActivity(fileShareIntent);
     }

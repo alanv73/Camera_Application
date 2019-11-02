@@ -57,7 +57,7 @@
         android:id="@+id/btnFileShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="lauchFileShareActivity"
+        android:onClick="launchFileShareActivity"
         android:text="File Share"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
