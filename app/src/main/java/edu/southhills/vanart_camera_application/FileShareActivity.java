@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -118,10 +119,72 @@ public class FileShareActivity extends AppCompatActivity {
                 }
             }
         });
+
+        mFileListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView,
+                                            View view,
+                                            int position,
+                                            long rowId) {
+                /*
+                 * Get a File for the selected file name.
+                 * Assume that the file names are in the
+                 * imageFilename array.
+                 */
+                File requestFile = new File(mImageFilenames[position]);
+                /*
+                 * Most file-related method calls need to be in
+                 * try-catch blocks.
+                 */
+                // Use the FileProvider to get a content URI
+                Uri fileUri = null;
+                try {
+                    fileUri = FileProvider.getUriForFile(
+                            FileShareActivity.this,
+                            "edu.southhills.vanart_camera_application",
+                            requestFile);
+                } catch (IllegalArgumentException e) {
+                    Log.e("File Selector",
+                            "The selected file can't be shared: " + requestFile.toString());
+                }
+
+                if(fileUri != null){
+                    String[] toField = new String[] {"alanv73@gmail.com"};
+                    String subjectField = "file attached";
+                    String messageText = "look for the file";
+                    sendEmail(toField, subjectField, messageText, fileUri);
+                } else {
+                    mResultIntent.setDataAndType(null, "");
+                    FileShareActivity.this.setResult(RESULT_CANCELED,
+                            mResultIntent);
+                }
+
+                return false;
+            }
+        });
     }
 
     public void onDoneClick(View v){
         // Associate a method with the Done button
         finish();
+    }
+
+    public void sendEmail(String[] toField, String subject, String message, Uri fileAttachment){
+        Intent mailIntent = new Intent(Intent.ACTION_SEND);
+
+        mailIntent.setType("plain/text");
+        mailIntent.putExtra(Intent.EXTRA_EMAIL, toField);
+        mailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        mailIntent.putExtra(Intent.EXTRA_TEXT, message);
+        mailIntent.putExtra(Intent.EXTRA_STREAM, fileAttachment);
+
+        Intent chooser = Intent.createChooser(mailIntent, "Send Email");
+
+        try{
+            startActivity(chooser);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(FileShareActivity.this, "eMail Client not Found", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
