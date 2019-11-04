@@ -97,6 +97,8 @@ public class FileShareActivity extends AppCompatActivity {
                     FileShareActivity.this.setResult(RESULT_CANCELED,
                             mResultIntent);
                 }
+
+                finish();
             }
         });
 
